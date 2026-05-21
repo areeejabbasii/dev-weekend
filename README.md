@@ -48,6 +48,8 @@ npx create-react-app pomodoro-timer --template typescript && cd pomodoro-timer &
 
 ## Deployment
 
+**🚀 Live Demo:** https://pomodoro-timer-app-sandy.vercel.app
+
 The app is ready for deployment on any static hosting service:
 
 ### Vercel (Recommended)
