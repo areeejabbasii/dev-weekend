@@ -163,6 +163,14 @@ const App: React.FC = () => {
           <div className={`timer-display ${mode} ${status}`}>
             <div className="timer-mode">{mode === 'focus' ? 'Focus Time' : 'Break Time'}</div>
             <div className="timer-time">{formatTime(timeLeft)}</div>
+            <div className="timer-progress">
+              <div 
+                className="progress-bar" 
+                style={{ 
+                  width: `${((mode === 'focus' ? focusDuration : breakDuration) - timeLeft) / (mode === 'focus' ? focusDuration : breakDuration) * 100}%` 
+                }}
+              />
+            </div>
             <div className="timer-status">
               {status === 'idle' && 'Ready to start'}
               {status === 'running' && 'Running...'}
