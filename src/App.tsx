@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './App.css';
 
 type TimerMode = 'focus' | 'break';
@@ -80,9 +80,9 @@ const App: React.FC = () => {
         clearInterval(timerRef.current);
       }
     };
-  }, [status, timeLeft]);
+  }, [status, timeLeft, handleTimerComplete]);
 
-  const handleTimerComplete = () => {
+  const handleTimerComplete = useCallback(() => {
     // Play sound
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
@@ -107,7 +107,7 @@ const App: React.FC = () => {
     setMode(nextMode);
     setTimeLeft(nextDuration);
     setStatus('idle');
-  };
+  }, [mode, focusDuration, breakDuration]);
 
   const startTimer = () => {
     setStatus('running');
