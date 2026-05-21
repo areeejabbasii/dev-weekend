@@ -58,30 +58,6 @@ const App: React.FC = () => {
     }
   };
 
-  // Timer logic
-  useEffect(() => {
-    if (status === 'running' && timeLeft > 0) {
-      timerRef.current = setInterval(() => {
-        setTimeLeft(prev => {
-          if (prev <= 1) {
-            // Timer completed
-            handleTimerComplete();
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-    } else if (timerRef.current) {
-      clearInterval(timerRef.current);
-    }
-
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, [status, timeLeft, handleTimerComplete]);
-
   const handleTimerComplete = useCallback(() => {
     // Play sound
     if (audioRef.current) {
@@ -108,6 +84,30 @@ const App: React.FC = () => {
     setTimeLeft(nextDuration);
     setStatus('idle');
   }, [mode, focusDuration, breakDuration]);
+
+  // Timer logic
+  useEffect(() => {
+    if (status === 'running' && timeLeft > 0) {
+      timerRef.current = setInterval(() => {
+        setTimeLeft(prev => {
+          if (prev <= 1) {
+            // Timer completed
+            handleTimerComplete();
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    } else if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, [status, timeLeft, handleTimerComplete]);
 
   const startTimer = () => {
     setStatus('running');
@@ -154,8 +154,8 @@ const App: React.FC = () => {
   return (
     <div className="app">
       <header className="app-header">
-        <h1 className="app-title">Pomodoro Timer</h1>
-        <p className="app-subtitle">Focus. Break. Repeat.</p>
+        <h1 className="app-title">Pomodoro Focus Timer</h1>
+        <p className="app-subtitle">Professional time management for deep work</p>
       </header>
 
       <main className="app-main">
@@ -172,9 +172,9 @@ const App: React.FC = () => {
               />
             </div>
             <div className="timer-status">
-              {status === 'idle' && 'Ready to start'}
-              {status === 'running' && 'Running...'}
-              {status === 'paused' && 'Paused'}
+              {status === 'idle' && 'Ready to begin'}
+              {status === 'running' && 'In progress'}
+              {status === 'paused' && 'Session paused'}
             </div>
           </div>
 
@@ -257,13 +257,13 @@ const App: React.FC = () => {
             </ul>
           )}
           <div className="history-info">
-            <p>Sessions are saved locally and reset daily at midnight.</p>
+            <p>Session data persists locally and resets daily at 00:00 local time.</p>
           </div>
         </div>
       </main>
 
       <footer className="app-footer">
-        <p>Built with React & TypeScript • Pomodoro Technique Timer</p>
+        <p>Professional Pomodoro Timer • Built with React & TypeScript • v1.0</p>
       </footer>
 
       {/* Hidden audio element for timer completion sound */}
